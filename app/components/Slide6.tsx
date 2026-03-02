@@ -8,8 +8,7 @@ export default function Slide6() {
   return (
     <section className="slide" id="slide-6">
       <div
-        className="slide-inner relative overflow-hidden" style={{ width: 1920, height: 1080, minWidth: 1920, minHeight: 1080, maxWidth: 1920, maxHeight: 1080, flexShrink: 0 }}
-        style={{ background: "#FFFFFF" }}
+        className="slide-inner relative overflow-hidden" style={{ width: 1920, height: 1080, minWidth: 1920, minHeight: 1080, maxWidth: 1920, maxHeight: 1080, flexShrink: 0, background: "#FFFFFF" }}
       >
         <SlideHeader section="АРХИТЕКТУРА" page="PAGE (N°006)" theme="light" />
 
