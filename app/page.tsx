@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import Slide1 from "./components/Slide1";
 import Slide2 from "./components/Slide2";
 import Slide3 from "./components/Slide3";
@@ -23,6 +23,26 @@ export default function Page() {
   const containerRef = useRef<HTMLElement>(null);
   const currentSlide = useRef(0);
   const isScrolling = useRef(false);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_PASSWORD) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === process.env.NEXT_PUBLIC_PASSWORD) {
+      setIsAuthenticated(true);
+      setError(false);
+    } else {
+      setError(true);
+    }
+  };
 
   const goTo = useCallback((index: number) => {
     const el = containerRef.current;
@@ -90,6 +110,32 @@ export default function Page() {
     window.addEventListener('resize', updateScale);
     return () => window.removeEventListener('resize', updateScale);
   }, []);
+
+  if (!isAuthenticated) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--slide-bg)] font-primary">
+        <div className="w-[400px] bg-white p-10 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+          <h2 className="mb-8 text-center text-[20px] font-bold tracking-[2px] text-[var(--text-primary)]">BITBANKER PITCH DECK</h2>
+          <form onSubmit={handleLogin} className="flex flex-col gap-5">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border-none bg-[#F2F2F0] p-4 text-[16px] text-[#1A1A1A] outline-none"
+              placeholder="Enter password"
+            />
+            {error && <span className="text-[14px] text-red-500">Incorrect password</span>}
+            <button
+              type="submit"
+              className="bg-[var(--right-panel)] p-4 text-[16px] font-medium tracking-[1px] text-white transition-colors hover:bg-[#7245ed]"
+            >
+              ACCESS
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="slides-container" ref={containerRef}>
