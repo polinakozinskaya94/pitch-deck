@@ -1,26 +1,332 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --slide-bg: #F2F2F0;
+  --right-panel: #8264ed;
+  --text-primary: #1A1A1A;
+  --text-secondary: #999999;
+  --text-light: #c9b8ff;
+  --text-white: #ffffff;
+  --text-navy: #1e285a;
+  --divider: #D0D0CC;
+  --dot-active: #1A1A1A;
+  --dot-inactive: #999999;
+}
+
+@layer base {
+  html, body {
+    height: 100%;
+  }
+
+  .font-primary {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  overflow: hidden;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #000;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.slides-container {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.slides-container::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-shrink: 0;
+  padding: 5vh 5vw;
+  box-sizing: border-box;
+}
+
+.slide-reveal {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.slide-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Element reveal animations */
+.slide-inner > * {
+  opacity: 0;
+  translate: 0 18px;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              translate 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-reveal[data-in-view] .slide-inner > * {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.slide-inner > *:nth-child(1)  { transition-delay: 0.00s; }
+.slide-inner > *:nth-child(2)  { transition-delay: 0.08s; }
+.slide-inner > *:nth-child(3)  { transition-delay: 0.16s; }
+.slide-inner > *:nth-child(4)  { transition-delay: 0.24s; }
+.slide-inner > *:nth-child(5)  { transition-delay: 0.32s; }
+.slide-inner > *:nth-child(6)  { transition-delay: 0.40s; }
+.slide-inner > *:nth-child(7)  { transition-delay: 0.48s; }
+.slide-inner > *:nth-child(8)  { transition-delay: 0.56s; }
+.slide-inner > *:nth-child(9)  { transition-delay: 0.64s; }
+.slide-inner > *:nth-child(10) { transition-delay: 0.72s; }
+.slide-inner > *:nth-child(11) { transition-delay: 0.80s; }
+.slide-inner > *:nth-child(12) { transition-delay: 0.88s; }
+.slide-inner > *:nth-child(13) { transition-delay: 0.96s; }
+.slide-inner > *:nth-child(14) { transition-delay: 1.04s; }
+.slide-inner > *:nth-child(15) { transition-delay: 1.12s; }
+.slide-inner > *:nth-child(n+16) { transition-delay: 1.20s; }
+
+/* Glow card hover effect */
+[data-glow]::before,
+[data-glow]::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: calc(var(--border-size) * -1);
+  border: var(--border-size) solid transparent;
+  border-radius: calc(var(--radius) * 1px);
+  background-attachment: fixed;
+  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+  -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  -webkit-mask-clip: padding-box, border-box;
+  -webkit-mask-composite: source-in;
+}
+
+[data-glow]::before {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
+    calc(var(--x, 0) * 1px)
+    calc(var(--y, 0) * 1px),
+    hsl(var(--hue, 280) 100% 50% / 1), transparent 100%
+  );
+  filter: brightness(2);
+}
+
+[data-glow]::after {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
+    calc(var(--x, 0) * 1px)
+    calc(var(--y, 0) * 1px),
+    hsl(0 100% 100% / 1), transparent 100%
+  );
+}
+
+[data-glow] .glow-outer {
+  position: absolute;
+  inset: 0;
+  will-change: filter;
+  opacity: var(--outer, 1);
+  border-radius: calc(var(--radius) * 1px);
+  border-width: calc(var(--border-size) * 20);
+  filter: blur(calc(var(--border-size) * 10));
+  background: none;
+  pointer-events: none;
+  border: none;
+}
+
+[data-glow] .glow-outer::before {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border: 10px solid transparent;
+  border-radius: calc(var(--radius) * 1px);
+  background-attachment: fixed;
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+  -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  -webkit-mask-clip: padding-box, border-box;
+  -webkit-mask-composite: source-in;
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
+    calc(var(--x, 0) * 1px)
+    calc(var(--y, 0) * 1px),
+    hsl(var(--hue, 280) 100% 50% / 1), transparent 100%
+  );
+  filter: brightness(2);
+}
+
+/*
+  Mesh gradient backgrounds extracted from .pen design.
+  Each is a 3×3 grid of colors at specific control points,
+  approximated with layered radial-gradients.
+*/
+
+/* Slide 2 — Corporate Structure */
+/* colors: #7245ed #3D3C8E #8BAADD / #1f295c #5548b0 #6666eb / #6666eb #addaff #8B6AF0 */
+/* points shifted: center row at ~59% y */
+.mesh-slide2 {
+  background:
+    radial-gradient(ellipse 80% 80% at 0% 0%, #7245ed 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 0%, #3D3C8E 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, #8BAADD 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 0% 59%, #1f295c 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 61%, #5548b0 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 100% 61%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 0% 100%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 100%, #addaff 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 100%, #8B6AF0 0%, transparent 70%),
+    #5548b0;
+}
+
+/* Slide 3 — Company (top half gradient, same palette as slide 2 but uniform grid) */
+.mesh-slide3 {
+  background:
+    radial-gradient(ellipse 80% 80% at 0% 0%, #7245ed 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 0%, #3D3C8E 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, #8BAADD 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 0% 50%, #1f295c 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 50%, #5548b0 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 100% 50%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 0% 100%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 100%, #addaff 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 100%, #8B6AF0 0%, transparent 70%),
+    #5548b0;
+}
+
+/* Slide 5 — Build vs Buy */
+/* colors: #1f295c #7245ed #8B6AF0 / #3D3C8E #6666eb #addaff / #5548b0 #8BAADD #6666eb */
+/* center point shifted to 82% x, 88% y */
+.mesh-slide5 {
+  background:
+    radial-gradient(ellipse 80% 80% at 0% 0%, #1f295c 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 0%, #7245ed 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, #8B6AF0 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 0% 50%, #3D3C8E 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 82% 88%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 100% 50%, #addaff 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 0% 100%, #5548b0 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 100%, #8BAADD 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 100%, #6666eb 0%, transparent 70%),
+    #3D3C8E;
+}
+
+/* Slide 9 — BB.Pro */
+/* colors: #5548b0 #8BAADD #8B6AF0 / #3D3C8E #263cab #6666eb / #6666eb #7245ed #addaff */
+/* center shifted to 62% x, 49% y; bottom-center to 68% x */
+.mesh-slide9 {
+  background:
+    radial-gradient(ellipse 80% 80% at 0% 0%, #5548b0 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 0%, #8BAADD 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, #8B6AF0 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 0% 50%, #3D3C8E 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 62% 49%, #263cab 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 100% 50%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 0% 100%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 68% 100%, #7245ed 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 100%, #addaff 0%, transparent 70%),
+    #4a3d99;
+}
+
+/* Slide 10 — BB.Wallet */
+/* colors: #6666eb #a78bdd #c4a8ff / #8B6AF0 #3d18a3 #3D3C8E / #1f295c #8866d9 #5548b0 */
+.mesh-slide10 {
+  background:
+    radial-gradient(ellipse 80% 80% at 0% 0%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 0%, #a78bdd 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, #c4a8ff 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 0% 50%, #8B6AF0 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 50%, #3d18a3 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 100% 50%, #3D3C8E 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 0% 100%, #1f295c 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 100%, #8866d9 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 100%, #5548b0 0%, transparent 70%),
+    #4a2d8e;
+}
+
+/* Slide 11 — Security hero block (460px tall) */
+/* colors: #3D3C8E #1f295c #8B6AF0 / #6666eb #7245ed #8BAADD / #addaff #6666eb #5548b0 */
+.mesh-slide11-hero {
+  background:
+    radial-gradient(ellipse 80% 80% at 0% 0%, #3D3C8E 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 0%, #1f295c 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, #8B6AF0 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 0% 50%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 50%, #7245ed 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 100% 50%, #8BAADD 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 0% 100%, #addaff 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 100%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 100%, #5548b0 0%, transparent 70%),
+    #5548b0;
+}
+
+/* Slide 12 — Launch Scenarios */
+/* colors: #3D3C8E #5548b0 #addaff / #7245ed #8B6AF0 #6666eb / #1f295c #6666eb #8BAADD */
+.mesh-slide12 {
+  background:
+    radial-gradient(ellipse 80% 80% at 0% 0%, #3D3C8E 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 0%, #5548b0 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, #addaff 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 0% 50%, #7245ed 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 50%, #8B6AF0 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 100% 50%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 0% 100%, #1f295c 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 100%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 100%, #8BAADD 0%, transparent 70%),
+    #5548b0;
+}
+
+/* Slide 14 — Next Steps */
+/* colors: #addaff #7245ed #1f295c / #3D3C8E #5548b0 #8B6AF0 / #6666eb #6666eb #8BAADD */
+.mesh-slide14 {
+  background:
+    radial-gradient(ellipse 80% 80% at 0% 0%, #addaff 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 0%, #7245ed 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 0%, #1f295c 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 0% 50%, #3D3C8E 0%, transparent 70%),
+    radial-gradient(ellipse 70% 70% at 50% 50%, #5548b0 0%, transparent 70%),
+    radial-gradient(ellipse 80% 70% at 100% 50%, #8B6AF0 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 0% 100%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 100%, #6666eb 0%, transparent 70%),
+    radial-gradient(ellipse 80% 80% at 100% 100%, #8BAADD 0%, transparent 70%),
+    #5548b0;
 }
