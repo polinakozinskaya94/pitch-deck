@@ -8,7 +8,7 @@ export default function Slide4() {
   return (
     <section className="slide" id="slide-4">
       <div
-        className="slide-inner relative overflow-hidden font-primary"
+        className="slide-inner relative overflow-hidden font-primary" style={{ width: 1920, height: 1080, minWidth: 1920, minHeight: 1080, maxWidth: 1920, maxHeight: 1080, flexShrink: 0 }}
         style={{ background: "var(--slide-bg)" }}
       >
         <SlideHeader section="РЫНОК" page="PAGE (N°004)" theme="light" />

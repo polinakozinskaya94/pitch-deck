@@ -34,7 +34,7 @@ function Dots({ className, style }: { className?: string; style?: React.CSSPrope
 export default function Slide2() {
   return (
     <section className="slide" id="slide-2">
-      <div className="slide-inner relative overflow-hidden mesh-slide2">
+      <div className="slide-inner relative overflow-hidden mesh-slide2" style={{ width: 1920, height: 1080, minWidth: 1920, minHeight: 1080, maxWidth: 1920, maxHeight: 1080, flexShrink: 0 }}>
         <SlideHeader section="КОРПОРАТИВНАЯ СТРУКТУРА" page="PAGE (N°002)" theme="dark" />
 
         {/* Title */}
@@ -155,7 +155,7 @@ export default function Slide2() {
         </div>
 
         {/* Key Note */}
-        <p className="absolute left-[80px] top-[910px] font-primary text-[16px] font-medium leading-[1.6] tracking-[0.5px] text-white/[0.67]" style={{ width: 900 }}>
+        <p className="absolute left-[80px] top-[922px] font-primary text-[16px] font-medium leading-[1.6] tracking-[0.5px] text-white/[0.67]" style={{ width: 900 }}>
           Ключевое: BitBanker Tech — инженерная компания с API. Диверсифицированный холдинг
           <br />
           с готовыми бизнес-рельсами: лицензии, платёжная инфраструктура, международные связки.

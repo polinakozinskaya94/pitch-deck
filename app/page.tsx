@@ -77,6 +77,20 @@ export default function Page() {
     return () => el.removeEventListener("scrollend", onScrollEnd);
   }, []);
 
+  useEffect(() => {
+    const updateScale = () => {
+      // Small adjustment to force Next.js fast refresh
+      const availableWidth = window.innerWidth * 0.95;
+      const availableHeight = window.innerHeight * 0.95;
+      const scale = Math.min(availableWidth / 1920, availableHeight / 1080);
+      document.documentElement.style.setProperty('--slide-scale', scale.toString());
+    };
+    
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
+
   return (
     <main className="slides-container" ref={containerRef}>
       <SlideReveal root={containerRef}><Slide1 /></SlideReveal>

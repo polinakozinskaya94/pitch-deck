@@ -4,7 +4,7 @@ import { SlideHeader, SlideFooter } from "./SlideChrome";
 export default function Slide1() {
   return (
     <section className="slide" id="slide-1">
-      <div className="slide-inner bg-[var(--slide-bg)]">
+      <div className="slide-inner shrink-0 bg-[var(--slide-bg)]" style={{ width: 1920, height: 1080, minWidth: 1920, minHeight: 1080, maxWidth: 1920, maxHeight: 1080 }}>
         <SlideHeader section="PITCH DECK" page="PAGE (N°001)" theme="light" />
 
         {/* Left Panel */}

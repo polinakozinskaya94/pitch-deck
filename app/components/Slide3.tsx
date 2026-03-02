@@ -7,7 +7,7 @@ import { SlideHeader, SlideFooter } from "./SlideChrome";
 export default function Slide3() {
   return (
     <section className="slide" id="slide-3">
-      <div className="slide-inner relative overflow-hidden mesh-slide3">
+      <div className="slide-inner relative overflow-hidden mesh-slide3" style={{ width: 1920, height: 1080, minWidth: 1920, minHeight: 1080, maxWidth: 1920, maxHeight: 1080, flexShrink: 0 }}>
         {/* White bottom half */}
         <div
           className="absolute left-0 bottom-0 w-full bg-white"
@@ -38,7 +38,7 @@ export default function Slide3() {
         {/* Description */}
         <p
           className="font-primary absolute font-medium tracking-[1px] leading-[1.6] text-white/[0.67]"
-          style={{ left: 80, top: 406, fontSize: 13, width: 1162 }}
+          style={{ left: 80, top: 432, fontSize: 13, width: 1162 }}
         >
           ЧТО УМЕЕМ: ЕДИНОЕ ЯДРО ДЛЯ ФИАТНЫХ И КРИПТО-ОПЕРАЦИЙ — НЕ ДВА РЕШЕНИЯ, А ОДНО. ПОЛНЫЙ COMPLIANCE: KYC, AML, KYT — И ДЛЯ РУБЛЕЙ, И ДЛЯ КРИПТО. WHITE-LABEL: ВСЁ РАБОТАЕТ ПОД БРЕНДОМ БАНКА.
         </p>

@@ -7,7 +7,7 @@ import { WordFadeIn } from "@/components/ui/word-fade-in";
 export default function Slide8() {
   return (
     <section className="slide" id="slide-8">
-      <div className="slide-inner relative overflow-hidden bg-white">
+      <div className="slide-inner relative overflow-hidden bg-white" style={{ width: 1920, height: 1080, minWidth: 1920, minHeight: 1080, maxWidth: 1920, maxHeight: 1080, flexShrink: 0 }}>
         {/* Left half — light purple background */}
         <div
           className="absolute"

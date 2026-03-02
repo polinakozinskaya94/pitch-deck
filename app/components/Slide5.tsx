@@ -6,7 +6,7 @@ import { WordFadeIn } from "@/components/ui/word-fade-in";
 export default function Slide5() {
   return (
     <section className="slide" id="slide-5">
-      <div className="slide-inner relative overflow-hidden mesh-slide5">
+      <div className="slide-inner relative overflow-hidden mesh-slide5" style={{ width: 1920, height: 1080, minWidth: 1920, minHeight: 1080, maxWidth: 1920, maxHeight: 1080, flexShrink: 0 }}>
         <SlideHeader section="BUILD VS BUY" page="PAGE (N°005)" theme="dark" />
 
         {/* === Title left side === */}
