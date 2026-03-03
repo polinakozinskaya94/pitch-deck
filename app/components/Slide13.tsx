@@ -109,7 +109,7 @@ export default function Slide13() {
             color: "#7245ed",
           }}
         >
-          80 млн ₽
+          80 млрд ₽
         </span>
         <div
           className="absolute"
